@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductModel } from '../models/product.model';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
+    this.getProducts();
   }
 
+  displayedColumns: string[] = 
+  ['name',
+  'description',
+  'ageRestriction',
+  'company',
+  'price',
+  'actions'];
+
+  stockProducts: Array<ProductModel>;
+
+  getProducts(): void{
+    this.productService.getProducts().subscribe(
+      data => this.stockProducts = data,
+      error => console.log(error)
+    );
+  }
 }
