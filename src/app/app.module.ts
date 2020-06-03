@@ -40,11 +40,17 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 //App Components
 import { HomeComponent } from './home/home.component';
+import { EditStockComponent } from './edit-stock/edit-stock.component';
+import { AddStockComponent } from './add-stock/add-stock.component';
+import { DeleteStockComponent } from './dialogs/delete-stock/delete-stock.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    EditStockComponent,
+    AddStockComponent,
+    DeleteStockComponent
   ],
   imports: [
     BrowserModule,
