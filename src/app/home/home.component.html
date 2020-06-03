@@ -1,5 +1,5 @@
 <h1 class="mat-display-2">Products in Stock</h1>
-<button mat-flat-button color="primary">Add Product</button>
+<button color="primary" mat-flat-button routerLink="/add">Add Product</button>
 <table mat-table [dataSource]="stockProducts" class="mat-elevation-z8" style="width: 500px;">
     <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -32,10 +32,10 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+        <button mat-icon-button color="primary" [routerLink]="['/edit/', element.productId]">
             <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" aria-label="Example icon button with a home icon">
+        <button mat-icon-button color="warn" (click)="openDeleteDialog(element)">
             <mat-icon>delete</mat-icon>
         </button>
     </td>
