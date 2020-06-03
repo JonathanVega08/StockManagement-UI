@@ -12,9 +12,14 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<Array<ProductModel>>{
-    const url = environment.baseUrl + 'product';
+  readonly baseUrl = environment.baseUrl + 'product';
 
-    return this.http.get<Array<ProductModel>>(url);
+  getProducts(): Observable<Array<ProductModel>>{
+    return this.http.get<Array<ProductModel>>(this.baseUrl);
+  }
+
+  deleteProduct(productId: number): Observable<{}>{
+    const url = `${this.baseUrl}/${productId}`
+    return this.http.delete(url)
   }
 }
