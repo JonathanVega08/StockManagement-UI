@@ -26,4 +26,16 @@ export class ProductService {
   addProduct(request: ProductModel): Observable<ProductModel>{
     return this.http.post<ProductModel>(this.baseUrl, request);
   }
+
+  getProductById(productId: number): Observable<ProductModel>{
+    const url = `${this.baseUrl}/${productId}`
+    return this.http.get<ProductModel>(url);
+  }
+
+  updateProduct(productId: number, request: ProductModel): Observable<ProductModel>{
+    request.productId = productId;
+    
+    const url = `${this.baseUrl}/${request.productId}`
+    return this.http.put<ProductModel>(url, request);
+  }
 }
