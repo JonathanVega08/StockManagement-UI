@@ -3,6 +3,7 @@ import { ProductModel } from '../models/product-model';
 import { ProductService } from '../services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteStockComponent } from '../dialogs/delete-stock/delete-stock.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,8 @@ export class HomeComponent implements OnInit {
     this.getProducts();
   }
 
+  dataSource = new MatTableDataSource<ProductModel>();
+
   displayedColumns: string[] = 
   ['name',
   'description',
@@ -26,24 +29,35 @@ export class HomeComponent implements OnInit {
   'price',
   'actions'];
 
-  stockProducts: Array<ProductModel>;
-
   getProducts(): void{
     this.productService.getProducts().subscribe(
-      data => this.stockProducts = data,
+      data => this.dataSource.data = data,
       error => console.log(error)
     );
   }
 
-  openDeleteDialog(item: ProductModel): void{
+  openDeleteDialog(item: ProductModel, index: number): void{
     const dialogRef = this.dialog.open(DeleteStockComponent,{
       width: '250px',
-      data: { name: item.name}
+      data: item.name
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      var result = result;
+      if (result){
+        this.deleteProduct(item.productId, index);
+      }
     });
+  }
+
+  private deleteProduct(productId: number, index: number): void{
+    this.productService.deleteProduct(productId).subscribe(
+      () => {
+        this.dataSource.data.splice(index, 1);
+        this.dataSource._updateChangeSubscription();
+      },
+      () => {
+        console.log('error');
+      }
+    );
   }
 }
