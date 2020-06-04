@@ -1,5 +1,8 @@
 <p class="mat-display-2">Products in Stock</p>
-<div class="mt-3">
+<div>
+    <p class="mat-display-1 text-danger">The stock is empty <mat-icon>error_outline</mat-icon></p>
+</div>
+<div class="mt-3" *ngIf="itemsInStock">
     <div class="mat-elevation-z8 table-height">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-width">
             <ng-container matColumnDef="name">

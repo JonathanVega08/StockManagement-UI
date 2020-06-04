@@ -29,9 +29,15 @@ export class HomeComponent implements OnInit {
   'price',
   'actions'];
 
+  itemsInStock: boolean = false;
+
   getProducts(): void{
     this.productService.getProducts().subscribe(
-      data => this.dataSource.data = data,
+      data => {
+        this.dataSource.data = data;
+        if(data && data.length > 0)
+          this.itemsInStock = true;
+      },
       error => console.log(error)
     );
   }
@@ -53,6 +59,11 @@ export class HomeComponent implements OnInit {
     this.productService.deleteProduct(productId).subscribe(
       () => {
         this.dataSource.data.splice(index, 1);
+
+        if(this.dataSource.data.length === 0){
+          this.itemsInStock = false;
+        }
+
         this.dataSource._updateChangeSubscription();
       },
       () => {
