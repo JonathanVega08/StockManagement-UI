@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Delete item</h1>
+<div mat-dialog-content>
+  <p>Please confirm you want to delete {{data}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">Yes</button>
+  <button mat-flat-button color="warn" [mat-dialog-close]="false"cdkFocusInitial>No</button>
+</div>

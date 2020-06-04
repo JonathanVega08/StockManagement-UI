@@ -1,0 +1,91 @@
+<div class="row">
+        <p class="mat-display-2">Add Product</p>
+</div>
+<div class="col-md-6 offset-md-3">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-width" id="productForm">
+        <div>
+            <mat-form-field class="full-width">
+                <mat-label>Product Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+        </div>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+        class="alert alert-danger">
+            <div *ngIf="name.errors.required" class="input-error">
+                Name is required.
+              </div>
+              <div *ngIf="name.errors.maxlength" class="input-error">
+                Name must not have more than 50 characters
+              </div>
+        </div>
+       <div>
+        <mat-form-field class="full-width">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+        </mat-form-field>
+       </div>
+       <div *ngIf="description.invalid && (description.dirty || description.touched)"
+        class="alert alert-danger">
+              <div *ngIf="description.errors.maxlength" class="input-error">
+                Description must not have more than 100 characters
+              </div>
+        </div>
+       <div>
+        <mat-form-field class="full-width">
+            <mat-label>Age restriction</mat-label>
+            <input matInput formControlName="ageRestriction" type="number">
+        </mat-form-field>
+       </div>
+       <div *ngIf="ageRestriction.invalid && (ageRestriction.dirty || ageRestriction.touched)"
+        class="alert alert-danger">
+            <div *ngIf="ageRestriction.errors.pattern" class="input-error">
+            Age cannot have decimal numbers
+            </div>
+            <div *ngIf="ageRestriction.errors.max" class="input-error">
+            Age is restricted to 100 years old
+            </div>
+       </div>
+       <div>
+        <mat-form-field class="full-width">
+            <mat-label>Company</mat-label>
+            <input matInput formControlName="company">
+        </mat-form-field>
+       </div>
+       <div *ngIf="company.invalid && (company.dirty || company.touched)"
+        class="alert alert-danger">
+            <div *ngIf="company.errors.required" class="input-error">
+                Company is required.
+            </div>
+            <div *ngIf="company.errors.maxlength" class="input-error">
+                Company must not have more than 50 characters
+            </div>
+        </div>
+       <div>
+        <mat-form-field class="full-width">
+            <mat-label>Price</mat-label>
+            <input matInput formControlName="price" type="number">
+        </mat-form-field>
+       </div>
+       <div *ngIf="price.invalid && (price.dirty || price.touched)"
+        class="alert alert-danger">
+            <div *ngIf="price.errors.required" class="input-error">
+                Price is required.
+            </div>
+            <div *ngIf="price.errors.max || price.errors.min" class="input-error">
+                Price must be in a range between 1 and 1000
+            </div>
+       </div>
+    </form>
+</div>
+<div class="row mt-3">
+    <div class="col-md-1 offset-md-3">
+        <button color="accent" mat-flat-button routerLink="/home"><mat-icon>arrow_back</mat-icon></button>
+    </div>
+    <div>
+        <button mat-raised-button (click)="clearForm()">Clear</button>
+    </div>
+    <div class="col-md-1 offset-md-3">
+        <button form="productForm" mat-flat-button color="primary">Save</button>
+    </div>
+</div>
+
