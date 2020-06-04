@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { ProductModel } from '../models/product-model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-stock',
@@ -13,7 +14,8 @@ export class EditStockComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
-    private productService: ProductService,) { }
+    private productService: ProductService,
+    private snackBar: MatSnackBar) { }
 
   productId: number;
   product: ProductModel;
@@ -73,10 +75,25 @@ export class EditStockComponent implements OnInit {
   onSubmit(): void{
     this.productService.updateProduct(this.productId, this.productForm.value)
     .subscribe(() => {
+      this.openSnackBar('Product updated successfully');
       this.router.navigate(['/home']);
     },
-    () => {
-
+    error => {
+      this.handleErrorMessage(error.error);
     })
+  }
+
+  openSnackBar(message: string): void{
+    this.snackBar.open(message, 'OK', {
+      duration: 3000,
+    });
+  }
+
+  handleErrorMessage(error: any): void{
+    if (error.status === 400){
+      this.openSnackBar('One or more fields are empty or incorrect');
+      return;
+    }
+    this.openSnackBar('An error ocurred in the server');
   }
 }

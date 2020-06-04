@@ -1,5 +1,5 @@
 <p class="mat-display-2">Products in Stock</p>
-<div>
+<div *ngIf="!itemsInStock">
     <p class="mat-display-1 text-danger">The stock is empty <mat-icon>error_outline</mat-icon></p>
 </div>
 <div class="mt-3" *ngIf="itemsInStock">

@@ -4,6 +4,7 @@ import { ProductService } from '../services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteStockComponent } from '../dialogs/delete-stock/delete-stock.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ import { MatTableDataSource } from '@angular/material/table';
 export class HomeComponent implements OnInit {
 
   constructor(private productService: ProductService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -65,10 +67,17 @@ export class HomeComponent implements OnInit {
         }
 
         this.dataSource._updateChangeSubscription();
+        this.openSnackBar('Product deleted successfully');
       },
       () => {
-        console.log('error');
+        this.openSnackBar('An error ocurred in the server');
       }
     );
+  }
+
+  openSnackBar(message: string): void{
+    this.snackBar.open(message, 'OK', {
+      duration: 3000,
+    });
   }
 }
