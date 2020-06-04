@@ -54,4 +54,8 @@ export class AddStockComponent implements OnInit {
 
     })
   }
+
+  clearForm(): void{
+    this.productForm.reset();
+  }
 }
